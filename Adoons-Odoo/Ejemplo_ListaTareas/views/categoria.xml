@@ -1,0 +1,56 @@
+<!-- Vista de categorías de tareas -->
+<odoo>
+  <data>
+
+    <!-- Acción para el modelo de categorías -->
+    <record model="ir.actions.act_window" id="action_lista_tareas_categoria">
+      <field name="name">Categorías de tareas</field>
+      <field name="res_model">lista_tareas.categoria</field>
+      <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Vista de lista para categorías -->
+    <record id="view_lista_tareas_categoria_list" model="ir.ui.view">
+      <field name="name">lista.tareas.categoria.list</field>
+      <field name="model">lista_tareas.categoria</field>
+      <field name="arch" type="xml">
+        <tree string="Categorías">
+          <field name="nombre"/>
+          <field name="descripcion"/>
+        </tree>
+      </field>
+    </record>
+
+    <!-- Vista de formulario para categorías -->
+    <record id="view_lista_tareas_categoria_form" model="ir.ui.view">
+      <field name="name">lista.tareas.categoria.form</field>
+      <field name="model">lista_tareas.categoria</field>
+      <field name="arch" type="xml">
+        <form string="Categoría">
+          <sheet>
+            <group>
+              <field name="nombre"/>
+              <field name="descripcion"/>
+            </group>
+            <notebook>
+              <page string="Tareas">
+                <field name="tarea_ids">
+                  <tree>
+                    <field name="tarea"/>
+                    <field name="prioridad"/>
+                    <field name="realizada"/>
+                  </tree>
+                </field>
+              </page>
+            </notebook>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <!-- Menú para gestionar categorías -->
+    <menuitem id="lista_tareas_menu_categoria" name="Categorías"
+              parent="lista_tareas_menu_1" action="action_lista_tareas_categoria" sequence="40"/>
+
+  </data>
+</odoo>

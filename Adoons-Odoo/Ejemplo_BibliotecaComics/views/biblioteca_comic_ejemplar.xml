@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ======================================================
+         ACCIÓN DEL MODELO EJEMPLAR
+         ====================================================== -->
+    <record id="biblioteca_comic_ejemplar_action" model="ir.actions.act_window">
+        <field name="name">Ejemplares de préstamo</field>
+        <field name="res_model">biblioteca.comic.ejemplar</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- ======================================================
+         MENÚ PARA EJEMPLARES
+         ====================================================== -->
+    <menuitem name="Ejemplares"
+              id="biblioteca_comic_ejemplar_menu"
+              parent="biblioteca_base_menu"
+              action="biblioteca_comic_ejemplar_action"
+              sequence="15"/>
+
+    <!-- ======================================================
+         VISTA FORMULARIO EJEMPLAR
+         ====================================================== -->
+    <record id="biblioteca_comic_ejemplar_view_form" model="ir.ui.view">
+        <field name="name">Formulario Ejemplar</field>
+        <field name="model">biblioteca.comic.ejemplar</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="codigo"/>
+                            <field name="comic_id"/>
+                            <field name="estado"/>
+                        </group>
+                        <group>
+                            <field name="socio_id"/>
+                            <field name="fecha_prestamo"/>
+                            <field name="fecha_devolucion_prevista"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ======================================================
+         VISTA LISTA EJEMPLAR
+         ====================================================== -->
+    <record id="biblioteca_comic_ejemplar_view_tree" model="ir.ui.view">
+        <field name="name">Lista de Ejemplares</field>
+        <field name="model">biblioteca.comic.ejemplar</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="codigo"/>
+                <field name="comic_nombre"/>
+                <field name="comic_categoria"/>
+                <field name="estado"/>
+                <field name="socio_id"/>
+                <field name="fecha_prestamo"/>
+                <field name="fecha_devolucion_prevista"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- ======================================================
+         VISTA DE BÚSQUEDA EJEMPLAR
+         ====================================================== -->
+    <record id="biblioteca_comic_ejemplar_view_search" model="ir.ui.view">
+        <field name="name">Búsqueda Ejemplares</field>
+        <field name="model">biblioteca.comic.ejemplar</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="codigo"/>
+                <field name="comic_id"/>
+                <field name="socio_id"/>
+                <field name="comic_categoria"/>
+
+                <!-- Filtros predefinidos -->
+                <filter name="disponibles" string="Disponibles"
+                        domain="[('estado','=','disponible')]"/>
+                <filter name="prestados" string="Prestados"
+                        domain="[('estado','=','prestado')]"/>
+
+                <!-- Agrupación -->
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_comic" string="Cómic" context="{'group_by':'comic_id'}"/>
+                    <filter name="group_estado" string="Estado" context="{'group_by':'estado'}"/>
+                    <filter name="group_categoria" string="Categoría" context="{'group_by':'comic_categoria'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_ciclo_formativo_user,ciclo.formativo user,model_ciclo_formativo,base.group_user,1,1,1,1
+access_ciclo_modul_user,ciclo.modul user,model_ciclo_modul,base.group_user,1,1,1,1
+access_ciclo_alumne_user,ciclo.alumne user,model_ciclo_alumne,base.group_user,1,1,1,1
+access_ciclo_professor_user,ciclo.professor user,model_ciclo_professor,base.group_user,1,1,1,1

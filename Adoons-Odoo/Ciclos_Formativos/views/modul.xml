@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Acción -->
+    <record id="modul_action" model="ir.actions.act_window">
+        <field name="name">Módulos</field>
+        <field name="res_model">ciclo.modul</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <!-- Menú -->
+    <menuitem id="modul_menu" name="Módulos" 
+              parent="ciclos_formativos_menu_root" 
+              action="modul_action" 
+              sequence="20"/>
+
+    <!-- Vista Formulario -->
+    <record id="modul_view_form" model="ir.ui.view">
+        <field name="name">ciclo.modul.form</field>
+        <field name="model">ciclo.modul</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="codigo"/>
+                            <field name="ciclo_id"/>
+                        </group>
+                        <group>
+                            <field name="curso"/>
+                            <field name="horas"/>
+                            <field name="professor_id"/>
+                            <field name="num_alumnes" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="descripcion"/>
+                    </group>
+                    <notebook>
+                        <page string="Alumnos matriculados">
+                            <field name="alumne_ids">
+                                <tree>
+                                    <field name="dni"/>
+                                    <field name="nombre_completo"/>
+                                    <field name="email"/>
+                                    <field name="telefono"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Lista -->
+    <record id="modul_view_tree" model="ir.ui.view">
+        <field name="name">ciclo.modul.tree</field>
+        <field name="model">ciclo.modul</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="codigo"/>
+                <field name="nombre"/>
+                <field name="ciclo_id"/>
+                <field name="curso"/>
+                <field name="horas"/>
+                <field name="professor_id"/>
+                <field name="num_alumnes"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista Búsqueda -->
+    <record id="modul_view_search" model="ir.ui.view">
+        <field name="name">ciclo.modul.search</field>
+        <field name="model">ciclo.modul</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="codigo"/>
+                <field name="ciclo_id"/>
+                <field name="professor_id"/>
+                <filter name="primer_curso" string="Primer curso" domain="[('curso','=','1')]"/>
+                <filter name="segundo_curso" string="Segundo curso" domain="[('curso','=','2')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_ciclo" string="Ciclo" context="{'group_by':'ciclo_id'}"/>
+                    <filter name="group_professor" string="Profesor" context="{'group_by':'professor_id'}"/>
+                    <filter name="group_curso" string="Curso" context="{'group_by':'curso'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>

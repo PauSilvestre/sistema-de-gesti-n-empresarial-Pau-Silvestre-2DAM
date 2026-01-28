@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Acción -->
+    <record id="ciclo_formativo_action" model="ir.actions.act_window">
+        <field name="name">Ciclos Formativos</field>
+        <field name="res_model">ciclo.formativo</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <!-- Menú principal -->
+    <menuitem id="ciclos_formativos_menu_root" name="Ciclos Formativos" sequence="10"/>
+
+    <!-- Submenú Ciclos -->
+    <menuitem id="ciclo_formativo_menu" name="Ciclos" 
+              parent="ciclos_formativos_menu_root" 
+              action="ciclo_formativo_action" 
+              sequence="10"/>
+
+    <!-- Vista Formulario -->
+    <record id="ciclo_formativo_view_form" model="ir.ui.view">
+        <field name="name">ciclo.formativo.form</field>
+        <field name="model">ciclo.formativo</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="codigo"/>
+                            <field name="nivel"/>
+                        </group>
+                        <group>
+                            <field name="duracion"/>
+                            <field name="num_moduls" readonly="1"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="descripcion"/>
+                    </group>
+                    <notebook>
+                        <page string="Módulos">
+                            <field name="modul_ids">
+                                <tree>
+                                    <field name="codigo"/>
+                                    <field name="nombre"/>
+                                    <field name="curso"/>
+                                    <field name="horas"/>
+                                    <field name="professor_id"/>
+                                    <field name="num_alumnes"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Lista -->
+    <record id="ciclo_formativo_view_tree" model="ir.ui.view">
+        <field name="name">ciclo.formativo.tree</field>
+        <field name="model">ciclo.formativo</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="codigo"/>
+                <field name="nombre"/>
+                <field name="nivel"/>
+                <field name="duracion"/>
+                <field name="num_moduls"/>
+            </tree>
+        </field>
+    </record>
+
+    <!-- Vista Kanban -->
+    <record id="ciclo_formativo_view_kanban" model="ir.ui.view">
+        <field name="name">ciclo.formativo.kanban</field>
+        <field name="model">ciclo.formativo</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="nombre"/>
+                <field name="nivel"/>
+                <field name="num_moduls"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_details">
+                                <strong><field name="nombre"/></strong>
+                                <div>Nivel: <field name="nivel"/></div>
+                                <div>Módulos: <field name="num_moduls"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vista Búsqueda -->
+    <record id="ciclo_formativo_view_search" model="ir.ui.view">
+        <field name="name">ciclo.formativo.search</field>
+        <field name="model">ciclo.formativo</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="nombre"/>
+                <field name="codigo"/>
+                <filter name="grado_medio" string="Grado Medio" domain="[('nivel','=','grado_medio')]"/>
+                <filter name="grado_superior" string="Grado Superior" domain="[('nivel','=','grado_superior')]"/>
+                <group expand="0" string="Agrupar por">
+                    <filter name="group_nivel" string="Nivel" context="{'group_by':'nivel'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+</odoo>
