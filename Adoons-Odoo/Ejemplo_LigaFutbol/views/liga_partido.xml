@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="liga_partido_action" model="ir.actions.act_window">
+        <field name="name">Partidos de la liga</field>
+        <field name="res_model">liga.partido</field>
+        <field name="view_mode">list,form,kanban,graph</field>
+    </record>
+
+    <menuitem name="Partidos de la liga"
+              id="liga_partido_menu"
+              parent="liga_base_menu"
+              action="liga_partido_action"/>
+
+    <record id="liga_partido_view_form" model="ir.ui.view">
+        <field name="name">Formulario Partidos</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <form string="Registro de Partido">
+                <group>
+                    <group>
+                        <field name="equipo_casa"/>
+                        <field name="goles_casa"/>
+                    </group>
+                    <group>
+                        <field name="equipo_fuera"/>
+                        <field name="goles_fuera"/>
+                    </group>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <record id="liga_partido_view_list" model="ir.ui.view">
+        <field name="name">Lista de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <tree string="Partidos jugados">
+                <header>
+                    <button name="sumar_goles_casa" type="object" string="+2 goles casa"/>
+                    <button name="sumar_goles_fuera" type="object" string="+2 goles fuera"/>
+                </header>
+                <field name="equipo_casa"/>
+                <field name="goles_casa"/>
+                <field name="equipo_fuera"/>
+                <field name="goles_fuera"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="liga_partido_view_kanban" model="ir.ui.view">
+        <field name="name">Tarjetas de partidos de la liga</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="equipo_casa"/>
+                <field name="goles_casa"/>
+                <field name="equipo_fuera"/>
+                <field name="goles_fuera"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="oe_kanban_content text-center">
+                                <div class="oe_kanban_card" style="padding:10px;">
+                                    <p><b>Resultado del Partido</b></p>
+                                    <p>
+                                        <t t-esc="record.equipo_casa.value"/> :
+                                        <t t-esc="record.goles_casa.value"/>
+                                        <strong> - </strong>
+                                        <t t-esc="record.goles_fuera.value"/> :
+                                        <t t-esc="record.equipo_fuera.value"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="liga_partido_view_graph" model="ir.ui.view">
+        <field name="name">Grafico goles casa</field>
+        <field name="model">liga.partido</field>
+        <field name="arch" type="xml">
+            <graph string="Goles en casa por partido" type="bar">
+                <field name="equipo_casa" type="row"/>
+                <field name="goles_casa" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_liga_partido_report" model="ir.actions.report">
+        <field name="name">Informe Partido</field>
+        <field name="model">liga.partido</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">Ejemplo_LigaFutbol.report_partido</field>
+        <field name="report_file">Ejemplo_LigaFutbol.report_partido</field>
+        <field name="binding_model_id" ref="model_liga_partido"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_partido">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="partido">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h1 style="text-align:center;">Resultado del Partido</h1>
+                        <table class="table table-bordered" style="margin-top:30px;">
+                            <tr>
+                                <th>Equipo Local</th>
+                                <td><t t-esc="partido.equipo_casa.nombre"/></td>
+                            </tr>
+                            <tr>
+                                <th>Goles Local</th>
+                                <td><t t-esc="partido.goles_casa"/></td>
+                            </tr>
+                            <tr>
+                                <th>Equipo Visitante</th>
+                                <td><t t-esc="partido.equipo_fuera.nombre"/></td>
+                            </tr>
+                            <tr>
+                                <th>Goles Visitante</th>
+                                <td><t t-esc="partido.goles_fuera"/></td>
+                            </tr>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
