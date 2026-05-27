@@ -1,12 +1,12 @@
-# -*- coding: utf-8 -*-
 {
     'name': 'Empresa Repartidors',
     'version': '1.0',
-    'summary': 'gestio de repartiments amb empleats, vehicles i clients',
-    'description': 'modul per gestionar una empresa de repartidors amb control de carnets, vehicles i estat dels enviaments',
+    'summary': 'gestion de repartos con empleados, vehiculos y clientes',
+    'description': 'modulo para gestionar una empresa de repartidores',
     'author': 'Alumne',
     'category': 'Educativo',
-    'depends': ['base'],
+    # web: necesario para el report pdf
+    'depends': ['base', 'web'],
     'data': [
         'security/ir.model.access.csv',
         'views/empleat.xml',

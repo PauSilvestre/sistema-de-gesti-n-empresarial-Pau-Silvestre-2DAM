@@ -1,55 +1,50 @@
-<!-- vistes per al model repartiment (el principal) -->
-<!-- inclou: formulari, llista amb colors, kanban, calendar, search amb ordenacio -->
 <odoo>
 
-    <!-- sequencia per al codi autonumeric REP/00001, REP/00002... -->
-    <!-- relacionat amb: repartiment.py linia del create() que crida next_by_code -->
+    <!-- secuencia REP/00001 -->
     <record id="seq_repartiment" model="ir.sequence">
-        <field name="name">sequencia repartiments</field>
+        <field name="name">secuencia repartiments</field>
         <field name="code">repartiment.repartiment</field>
         <field name="prefix">REP/</field>
         <field name="padding">5</field>
     </record>
 
-    <!-- accio principal -->
+    <!-- accion y menu -->
     <record id="repartiment_action" model="ir.actions.act_window">
         <field name="name">repartiments</field>
         <field name="res_model">repartiment.repartiment</field>
         <field name="view_mode">list,form,kanban,calendar</field>
     </record>
 
-    <!-- submenu repartiments -->
     <menuitem name="repartiments" id="repartiment_repartiment_menu"
               parent="repartiment_base_menu" action="repartiment_action" sequence="40"/>
 
-    <!-- formulari repartiment -->
+    <!-- formulario -->
     <record id="repartiment_view_form" model="ir.ui.view">
-        <field name="name">formulari repartiment</field>
+        <field name="name">repartiment.form</field>
         <field name="model">repartiment.repartiment</field>
         <field name="arch" type="xml">
             <form string="fitxa repartiment">
                 <header>
-                    <!-- widget statusbar: mostra l'estat com una barra de progres -->
                     <field name="estat" widget="statusbar"
                            statusbar_visible="no_ha_eixit,de_cami,entregada"/>
                 </header>
                 <sheet>
                     <group>
-                        <group string="dades generals">
+                        <group string="generales">
                             <field name="codi"/>
                             <field name="urgencia"/>
                             <field name="empleat_id"/>
                             <field name="vehicle_id"/>
                             <field name="client_id"/>
                         </group>
-                        <group string="dates">
+                        <group string="fechas">
                             <field name="data_recepcio"/>
                             <field name="data_inici"/>
                             <field name="data_retorn"/>
                         </group>
                     </group>
                     <group>
-                        <group string="paquet">
+                        <group string="paquete">
                             <field name="kilometres"/>
                             <field name="pes"/>
                             <field name="volum"/>
@@ -68,10 +63,9 @@
         </field>
     </record>
 
-    <!-- llista repartiments amb colors segons estat -->
-    <!-- decoration-danger = roig (no ha eixit), warning = groc (de cami), success = verd (entregada) -->
+    <!-- lista con colores y sumas -->
     <record id="repartiment_view_list" model="ir.ui.view">
-        <field name="name">llista repartiments</field>
+        <field name="name">repartiment.list</field>
         <field name="model">repartiment.repartiment</field>
         <field name="arch" type="xml">
             <list string="repartiments"
@@ -91,9 +85,9 @@
         </field>
     </record>
 
-    <!-- kanban repartiments -->
+    <!-- kanban -->
     <record id="repartiment_view_kanban" model="ir.ui.view">
-        <field name="name">kanban repartiments</field>
+        <field name="name">repartiment.kanban</field>
         <field name="model">repartiment.repartiment</field>
         <field name="arch" type="xml">
             <kanban default_group_by="estat">
@@ -103,16 +97,11 @@
                 <field name="estat"/>
                 <templates>
                     <t t-name="card">
-                        <div class="oe_kanban_global_click">
+                        <div class="oe_kanban_global_click o_kanban_record">
                             <strong><field name="codi"/></strong>
                             <div>repartidor: <field name="empleat_id"/></div>
                             <div>urgencia: <field name="urgencia"/></div>
-                            <div>
-                                <!-- badge amb color segons estat -->
-                                <span t-attf-class="badge #{record.estat.raw_value == 'entregada' ? 'text-bg-success' : record.estat.raw_value == 'de_cami' ? 'text-bg-warning' : 'text-bg-danger'}">
-                                    <field name="estat"/>
-                                </span>
-                            </div>
+                            <div>estat: <field name="estat"/></div>
                         </div>
                     </t>
                 </templates>
@@ -120,12 +109,12 @@
         </field>
     </record>
 
-    <!-- calendar: mostra repartiments per data recepcio -->
+    <!-- calendar -->
     <record id="repartiment_view_calendar" model="ir.ui.view">
-        <field name="name">calendar repartiments</field>
+        <field name="name">repartiment.calendar</field>
         <field name="model">repartiment.repartiment</field>
         <field name="arch" type="xml">
-            <calendar string="repartiments" date_start="data_recepcio" color="urgencia">
+            <calendar string="repartiments" date_start="data_recepcio" color="empleat_id" mode="month">
                 <field name="codi"/>
                 <field name="empleat_id"/>
                 <field name="estat"/>
@@ -133,31 +122,27 @@
         </field>
     </record>
 
-    <!-- vista search amb ordenacio per data_recepcio i urgencia -->
-    <!-- requisit del enunciat: proces d'ordenacio amb search -->
+    <!-- search + ordenacion -->
     <record id="repartiment_view_search" model="ir.ui.view">
-        <field name="name">buscar repartiments</field>
+        <field name="name">repartiment.search</field>
         <field name="model">repartiment.repartiment</field>
         <field name="arch" type="xml">
             <search string="buscar repartiments">
-                <!-- camps de busqueda -->
                 <field name="codi"/>
                 <field name="empleat_id"/>
                 <field name="client_id"/>
                 <field name="estat"/>
                 <field name="urgencia"/>
-                <!-- filtres predefinits -->
                 <filter string="no ha eixit" name="filter_no_eixit"
                         domain="[('estat','=','no_ha_eixit')]"/>
-                <filter string="de camí" name="filter_de_cami"
+                <filter string="de cami" name="filter_de_cami"
                         domain="[('estat','=','de_cami')]"/>
                 <filter string="entregada" name="filter_entregada"
                         domain="[('estat','=','entregada')]"/>
                 <separator/>
-                <filter string="urgents" name="filter_urgents"
+                <filter string="urgentes" name="filter_urgents"
                         domain="[('urgencia','in',['1','2'])]"/>
-                <!-- agrupacions -->
-                <group expand="0" string="agrupar per">
+                <group expand="0" string="agrupar por">
                     <filter string="estat" name="group_estat" context="{'group_by':'estat'}"/>
                     <filter string="urgencia" name="group_urgencia" context="{'group_by':'urgencia'}"/>
                     <filter string="empleat" name="group_empleat" context="{'group_by':'empleat_id'}"/>

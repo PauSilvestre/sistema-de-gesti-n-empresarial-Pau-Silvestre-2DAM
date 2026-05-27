@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-# importa fitxer  perque odoo carregue
+# carga modelos
 from . import empleat
 from . import vehicle
 from . import client

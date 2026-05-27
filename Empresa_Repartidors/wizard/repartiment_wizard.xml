@@ -1,9 +1,7 @@
-<!-- wizard per crear repartiments de forma simplificada -->
-<!-- relacionat amb repartiment_wizard.py -->
 <odoo>
-    <!-- vista formulari del wizard -->
+    <!-- formulario del wizard -->
     <record id="repartiment_wizard_form" model="ir.ui.view">
-        <field name="name">wizard crear repartiment</field>
+        <field name="name">repartiment.wizard.form</field>
         <field name="model">repartiment.repartiment.wizard</field>
         <field name="arch" type="xml">
             <form string="crear repartiment rapid">
@@ -23,8 +21,7 @@
                     </group>
                 </sheet>
                 <footer>
-                    <!-- boto que crida la funcio action_crear_repartiment del wizard -->
-                    <button string="crear repartiment" name="action_crear_repartiment"
+                    <button string="crear" name="action_crear_repartiment"
                             type="object" class="btn-primary"/>
                     <button string="cancelar" class="btn-secondary" special="cancel"/>
                 </footer>
@@ -32,7 +29,7 @@
         </field>
     </record>
 
-    <!-- accio que obre el wizard en una finestra nova (target=new) -->
+    <!-- accion modal -->
     <record id="action_wizard_repartiment" model="ir.actions.act_window">
         <field name="name">crear repartiment (wizard)</field>
         <field name="res_model">repartiment.repartiment.wizard</field>
@@ -40,7 +37,6 @@
         <field name="target">new</field>
     </record>
 
-    <!-- menu per obrir el wizard -->
     <menuitem id="menu_wizard_repartiment" name="crear repartiment (wizard)"
               parent="repartiment_base_menu" action="action_wizard_repartiment" sequence="50"/>
 </odoo>

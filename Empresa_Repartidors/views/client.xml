@@ -1,19 +1,17 @@
-<!-- vistes per al model client -->
 <odoo>
-    <!-- accio que obre les vistes de clients -->
+    <!-- accion y menu -->
     <record id="client_action" model="ir.actions.act_window">
         <field name="name">clients</field>
         <field name="res_model">repartiment.client</field>
         <field name="view_mode">list,form</field>
     </record>
 
-    <!-- submenu clients -->
     <menuitem name="clients" id="repartiment_client_menu"
               parent="repartiment_base_menu" action="client_action" sequence="30"/>
 
-    <!-- formulari client -->
+    <!-- formulario -->
     <record id="client_view_form" model="ir.ui.view">
-        <field name="name">formulari client</field>
+        <field name="name">client.form</field>
         <field name="model">repartiment.client</field>
         <field name="arch" type="xml">
             <form string="fitxa client">
@@ -29,13 +27,12 @@
         </field>
     </record>
 
-    <!-- llista clients -->
+    <!-- lista editable -->
     <record id="client_view_list" model="ir.ui.view">
-        <field name="name">llista clients</field>
+        <field name="name">client.list</field>
         <field name="model">repartiment.client</field>
         <field name="arch" type="xml">
             <list string="clients" editable="bottom">
-                <!-- linies editables: es pot editar directament des de la llista -->
                 <field name="dni"/>
                 <field name="nom"/>
                 <field name="cognom"/>

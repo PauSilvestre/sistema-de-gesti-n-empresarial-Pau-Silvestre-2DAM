@@ -1,14 +1,11 @@
-# -*- coding: utf-8 -*-
-# wizard per crear repartiments de forma simplificada
-# model transitori (no es guarda a la BD)
-# els models empleat, vehicle, client i repartiment
 from odoo import models, fields
 
+
+# modelo transitorio
 class RepartimentWizard(models.TransientModel):
     _name = 'repartiment.repartiment.wizard'
-    _description = 'assistent per crear repartiments de forma rapida'
+    _description = 'asistente crear reparto'
 
-    # camps basics per crear un repartiment rapid
     empleat_id = fields.Many2one('repartiment.empleat', string='repartidor', required=True)
     vehicle_id = fields.Many2one('repartiment.vehicle', string='vehicle', required=True)
     client_id = fields.Many2one('repartiment.client', string='client emissor', required=True)
@@ -23,15 +20,22 @@ class RepartimentWizard(models.TransientModel):
     ], string='urgencia', default='5', required=True)
     receptor_nom = fields.Char('nom receptor')
 
+    # crea reparto y abre su ficha
     def action_crear_repartiment(self):
-        """crea el repartiment real al model repartiment.repartiment amb les dades del wizard"""
-        for wiz in self:
-            self.env['repartiment.repartiment'].create({
-                'empleat_id': wiz.empleat_id.id,
-                'vehicle_id': wiz.vehicle_id.id,
-                'client_id': wiz.client_id.id,
-                'data_recepcio': wiz.data_recepcio,
-                'kilometres': wiz.kilometres,
-                'urgencia': wiz.urgencia,
-                'receptor_nom': wiz.receptor_nom,
-            })
+        self.ensure_one()
+        nou = self.env['repartiment.repartiment'].create({
+            'empleat_id': self.empleat_id.id,
+            'vehicle_id': self.vehicle_id.id,
+            'client_id': self.client_id.id,
+            'data_recepcio': self.data_recepcio,
+            'kilometres': self.kilometres,
+            'urgencia': self.urgencia,
+            'receptor_nom': self.receptor_nom,
+        })
+        return {
+            'type': 'ir.actions.act_window',
+            'res_model': 'repartiment.repartiment',
+            'res_id': nou.id,
+            'view_mode': 'form',
+            'target': 'current',
+        }

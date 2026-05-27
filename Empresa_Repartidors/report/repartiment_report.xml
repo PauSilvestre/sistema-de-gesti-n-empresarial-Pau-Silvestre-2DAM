@@ -1,25 +1,18 @@
-<!-- report pdf: llista de repartiments pendents d'un empleat -->
-<!-- genera un pdf per cada empleat seleccionat amb els seus repartiments pendents -->
-<!-- relacionat amb: model repartiment.empleat (el report es llança des d'un empleat) -->
 <odoo>
-
-    <!-- definicio del report: tipus qweb-pdf, vinculat al model empleat -->
+    <!-- report pdf: pendientes por empleado -->
     <record id="action_report_repartiments_pendents" model="ir.actions.report">
         <field name="name">repartiments pendents</field>
         <field name="model">repartiment.empleat</field>
         <field name="report_type">qweb-pdf</field>
-        <!-- nom del template qweb que utilitza (ha de coincidir amb el id del template) -->
         <field name="report_name">Empresa_Repartidors.report_repartiments_pendents</field>
         <field name="report_file">Empresa_Repartidors.report_repartiments_pendents</field>
-        <!-- binding: fa que aparega al boto "imprimir" del formulari empleat -->
         <field name="binding_model_id" ref="model_repartiment_empleat"/>
         <field name="binding_type">report</field>
     </record>
 
-    <!-- template qweb del pdf -->
+    <!-- plantilla qweb -->
     <template id="report_repartiments_pendents">
         <t t-call="web.html_container">
-            <!-- docs = els empleats seleccionats -->
             <t t-foreach="docs" t-as="empleat">
                 <t t-call="web.external_layout">
                     <div class="page">
@@ -27,7 +20,6 @@
                         <h3>empleat: <t t-esc="empleat.nom"/> <t t-esc="empleat.cognom"/></h3>
                         <h4>dni: <t t-esc="empleat.dni"/></h4>
 
-                        <!-- taula amb els repartiments que tenen estat 'no_ha_eixit' -->
                         <table class="table table-bordered" style="margin-top:20px;">
                             <thead>
                                 <tr>
@@ -41,7 +33,6 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- filtra nomes els repartiments pendents d'eixida -->
                                 <t t-foreach="empleat.repartiment_ids.filtered(lambda r: r.estat == 'no_ha_eixit')" t-as="rep">
                                     <tr>
                                         <td><t t-esc="rep.codi"/></td>
@@ -56,10 +47,9 @@
                             </tbody>
                         </table>
 
-                        <!-- missatge si no hi ha repartiments pendents -->
                         <t t-if="not empleat.repartiment_ids.filtered(lambda r: r.estat == 'no_ha_eixit')">
                             <p style="text-align:center; margin-top:30px;">
-                                <em>no hi ha repartiments pendents d'eixida per a aquest empleat</em>
+                                <em>no hi ha repartiments pendents d'eixida</em>
                             </p>
                         </t>
                     </div>
