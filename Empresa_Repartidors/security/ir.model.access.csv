@@ -1,0 +1,6 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_repartiment_empleat,access.repartiment.empleat,model_repartiment_empleat,base.group_user,1,1,1,1
+access_repartiment_vehicle,access.repartiment.vehicle,model_repartiment_vehicle,base.group_user,1,1,1,1
+access_repartiment_client,access.repartiment.client,model_repartiment_client,base.group_user,1,1,1,1
+access_repartiment_repartiment,access.repartiment.repartiment,model_repartiment_repartiment,base.group_user,1,1,1,1
+access_repartiment_wizard,access.repartiment.repartiment.wizard,model_repartiment_repartiment_wizard,base.group_user,1,1,1,1

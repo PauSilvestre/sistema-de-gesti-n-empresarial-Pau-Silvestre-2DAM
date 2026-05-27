@@ -1,0 +1,96 @@
+<!-- vistes per al model empleat -->
+<!-- inclou: accio, menu, formulari, llista i kanban -->
+<odoo>
+    <!-- accio que obre les vistes d'empleats -->
+    <record id="empleat_action" model="ir.actions.act_window">
+        <field name="name">empleats</field>
+        <field name="res_model">repartiment.empleat</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <!-- menu principal del modul -->
+    <menuitem name="repartiments" id="repartiment_base_menu"/>
+    <!-- submenu empleats -->
+    <menuitem name="empleats" id="repartiment_empleat_menu"
+              parent="repartiment_base_menu" action="empleat_action" sequence="10"/>
+
+    <!-- formulari empleat -->
+    <record id="empleat_view_form" model="ir.ui.view">
+        <field name="name">formulari empleat</field>
+        <field name="model">repartiment.empleat</field>
+        <field name="arch" type="xml">
+            <form string="fitxa empleat">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="nom"/>
+                            <field name="cognom"/>
+                            <field name="dni"/>
+                            <field name="telefon"/>
+                        </group>
+                        <group>
+                            <field name="foto" widget="image" class="oe_avatar"/>
+                            <field name="carnet_ciclomotor"/>
+                            <field name="carnet_furgoneta"/>
+                        </group>
+                    </group>
+                    <!-- llista de repartiments de l'empleat (one2many) -->
+                    <notebook>
+                        <page string="repartiments">
+                            <field name="repartiment_ids">
+                                <list>
+                                    <field name="codi"/>
+                                    <field name="data_recepcio"/>
+                                    <field name="estat"/>
+                                    <field name="urgencia"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- llista d'empleats -->
+    <record id="empleat_view_list" model="ir.ui.view">
+        <field name="name">llista empleats</field>
+        <field name="model">repartiment.empleat</field>
+        <field name="arch" type="xml">
+            <list string="empleats">
+                <field name="nom"/>
+                <field name="cognom"/>
+                <field name="dni"/>
+                <field name="telefon"/>
+                <field name="carnet_ciclomotor"/>
+                <field name="carnet_furgoneta"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- kanban empleats: mostra foto i nom -->
+    <record id="empleat_view_kanban" model="ir.ui.view">
+        <field name="name">kanban empleats</field>
+        <field name="model">repartiment.empleat</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="nom"/>
+                <field name="cognom"/>
+                <field name="foto"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="oe_kanban_global_click">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('repartiment.empleat', 'foto', record.id.raw_value)"
+                                     class="oe_kanban_avatar" alt="foto"/>
+                            </div>
+                            <div class="oe_kanban_details">
+                                <strong><field name="nom"/> <field name="cognom"/></strong>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+</odoo>
