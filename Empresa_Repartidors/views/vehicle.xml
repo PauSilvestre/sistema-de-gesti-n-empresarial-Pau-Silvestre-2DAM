@@ -3,7 +3,7 @@
     <record id="vehicle_action" model="ir.actions.act_window">
         <field name="name">vehicles</field>
         <field name="res_model">repartiment.vehicle</field>
-        <field name="view_mode">list,form,kanban</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <menuitem name="vehicles" id="repartiment_vehicle_menu"
@@ -36,11 +36,11 @@
         <field name="name">vehicle.list</field>
         <field name="model">repartiment.vehicle</field>
         <field name="arch" type="xml">
-            <list string="vehicles">
+            <tree string="vehicles">
                 <field name="tipus"/>
                 <field name="matricula"/>
                 <field name="descripcio"/>
-            </list>
+            </tree>
         </field>
     </record>
 

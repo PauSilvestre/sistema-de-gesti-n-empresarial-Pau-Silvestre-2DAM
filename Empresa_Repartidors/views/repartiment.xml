@@ -12,7 +12,7 @@
     <record id="repartiment_action" model="ir.actions.act_window">
         <field name="name">repartiments</field>
         <field name="res_model">repartiment.repartiment</field>
-        <field name="view_mode">list,form,kanban,calendar</field>
+        <field name="view_mode">tree,form,kanban,calendar</field>
     </record>
 
     <menuitem name="repartiments" id="repartiment_repartiment_menu"
@@ -68,7 +68,7 @@
         <field name="name">repartiment.list</field>
         <field name="model">repartiment.repartiment</field>
         <field name="arch" type="xml">
-            <list string="repartiments"
+            <tree string="repartiments"
                   decoration-danger="estat == 'no_ha_eixit'"
                   decoration-warning="estat == 'de_cami'"
                   decoration-success="estat == 'entregada'">
@@ -81,7 +81,7 @@
                 <field name="kilometres" sum="total km"/>
                 <field name="pes" sum="total pes"/>
                 <field name="estat"/>
-            </list>
+            </tree>
         </field>
     </record>
 

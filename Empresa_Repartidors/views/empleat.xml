@@ -3,7 +3,7 @@
     <record id="empleat_action" model="ir.actions.act_window">
         <field name="name">empleats</field>
         <field name="res_model">repartiment.empleat</field>
-        <field name="view_mode">list,form,kanban</field>
+        <field name="view_mode">tree,form,kanban</field>
     </record>
 
     <menuitem name="repartiments" id="repartiment_base_menu"/>
@@ -33,12 +33,12 @@
                     <notebook>
                         <page string="repartiments">
                             <field name="repartiment_ids">
-                                <list>
+                                <tree>
                                     <field name="codi"/>
                                     <field name="data_recepcio"/>
                                     <field name="estat"/>
                                     <field name="urgencia"/>
-                                </list>
+                                </tree>
                             </field>
                         </page>
                     </notebook>
@@ -52,14 +52,14 @@
         <field name="name">empleat.list</field>
         <field name="model">repartiment.empleat</field>
         <field name="arch" type="xml">
-            <list string="empleats">
+            <tree string="empleats">
                 <field name="nom"/>
                 <field name="cognom"/>
                 <field name="dni"/>
                 <field name="telefon"/>
                 <field name="carnet_ciclomotor"/>
                 <field name="carnet_furgoneta"/>
-            </list>
+            </tree>
         </field>
     </record>
 

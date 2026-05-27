@@ -3,7 +3,7 @@
     <record id="client_action" model="ir.actions.act_window">
         <field name="name">clients</field>
         <field name="res_model">repartiment.client</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">tree,form</field>
     </record>
 
     <menuitem name="clients" id="repartiment_client_menu"
@@ -32,12 +32,12 @@
         <field name="name">client.list</field>
         <field name="model">repartiment.client</field>
         <field name="arch" type="xml">
-            <list string="clients" editable="bottom">
+            <tree string="clients" editable="bottom">
                 <field name="dni"/>
                 <field name="nom"/>
                 <field name="cognom"/>
                 <field name="telefon"/>
-            </list>
+            </tree>
         </field>
     </record>
 </odoo>
