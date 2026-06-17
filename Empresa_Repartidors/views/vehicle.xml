@@ -54,7 +54,7 @@
                 <field name="matricula"/>
                 <field name="foto"/>
                 <templates>
-                    <t t-name="card">
+                    <t t-name="kanban-box">
                         <div class="oe_kanban_global_click o_kanban_record">
                             <img t-att-src="'/web/image/repartiment.vehicle/' + record.id.raw_value + '/foto'"
                                  alt="foto" style="max-width:64px;max-height:64px;"/>

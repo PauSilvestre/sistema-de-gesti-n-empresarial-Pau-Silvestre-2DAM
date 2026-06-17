@@ -96,7 +96,7 @@
                 <field name="urgencia"/>
                 <field name="estat"/>
                 <templates>
-                    <t t-name="card">
+                    <t t-name="kanban-box">
                         <div class="oe_kanban_global_click o_kanban_record">
                             <strong><field name="codi"/></strong>
                             <div>repartidor: <field name="empleat_id"/></div>
